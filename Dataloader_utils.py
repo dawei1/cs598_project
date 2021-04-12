@@ -1,3 +1,6 @@
+import Constants
+
+
 def parse_dataset_csv(csv_path):
     import csv
     import numpy as np
@@ -13,7 +16,7 @@ def parse_dataset_csv(csv_path):
                 col_name_list = row
                 continue
             image_dic = {}
-            image_dic['imagePath'] = row[0].replace('CheXpert-v1.0-small', '')
+            image_dic['imagePath'] = Constants.ImagePath+row[0].replace('CheXpert-v1.0-small', '')
             image_dic['sex'] = row[1]
             image_dic['age'] = row[2]
             image_dic['direction'] = row[3]  # Frontal vs Lateral
@@ -24,7 +27,7 @@ def parse_dataset_csv(csv_path):
             # replace -1 entry with 0
             labels[labels == '-1.0'] = '0.0'
             labels = labels.astype(np.float)
-            image_dic['label'] = labels
+            image_dic['label'] = np.squeeze(labels)
             dataset_list.append(image_dic)
     return col_name_list, dataset_list
 

@@ -6,7 +6,6 @@ DWDatasetRootDir = "/data/CheXpert-v1.0-small"
 DatasetRootDir = DWDatasetRootDir
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
-ImagePath = DatasetRootDir+"/"
 # The size of the subset used for local development
 sizeOfsubset = 8192
 
@@ -28,5 +27,13 @@ ParsedDatasetPath = "./Full_Dataset.pickle"
 # 2. 'label', a multi-hot numpy array
 ParsedValidsetPath = "./Validation_Dataset.pickle"
 
-# Random seed
+# Enable/disable image augmentation
+ImageAugment = True
+
+# batch size
+batch_size = 256
+
+# Random seed, set to None for random
 seed = 1231245
+
+eval_set_ratio = 0.2
