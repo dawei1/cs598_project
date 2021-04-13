@@ -2,7 +2,7 @@
 
 # #Dataloader constants
 # The dataset location on Da's local machine
-DWDatasetRootDir = "/data/CheXpert-v1.0-small"
+DWDatasetRootDir = "./data/CheXpert-v1.0-small"
 DatasetRootDir = DWDatasetRootDir
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
