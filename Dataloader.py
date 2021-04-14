@@ -14,7 +14,7 @@ class XrayDataset(Dataset):
 
     def __getitem__(self, index):
         image_name = self.data[index]['imagePath']
-        image = io.read_image(self.data[index]['imagePath'])
+        image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.RGB)
         label = self.data[index]['label']
         if self.transform:
             image = self.transform(image)
