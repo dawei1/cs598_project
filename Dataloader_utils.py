@@ -16,7 +16,7 @@ def parse_dataset_csv(csv_path):
                 col_name_list = row
                 continue
             image_dic = {}
-            image_dic['imagePath'] = Constants.ImagePath+row[0].replace('CheXpert-v1.0-small', '')
+            image_dic['imagePath'] = Constants.DatasetRootDir+row[0].replace('CheXpert-v1.0-small', '')
             image_dic['sex'] = row[1]
             image_dic['age'] = row[2]
             image_dic['direction'] = row[3]  # Frontal vs Lateral

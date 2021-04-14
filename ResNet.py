@@ -17,10 +17,10 @@ import torch
 
 model = models.resnet18()
 #print(model)
-#model.conv1 = nn.Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), bias=False)
-#model.fc = None
-#model.avgpool = None
-#print(model)
+model.conv1 = nn.Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), bias=False)
+model.fc = None
+model.avgpool = None
+print(model)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 n_epochs = 10
@@ -31,7 +31,6 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
     for epoch in range(n_epoch):
         curr_epoch_loss = []
         for data, target in train_dataloader:
-            print(data.shape)
             #print(target)
             def closure():
                 optimizer.zero_grad()
