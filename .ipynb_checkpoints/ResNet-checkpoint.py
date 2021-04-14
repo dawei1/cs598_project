@@ -29,7 +29,6 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
     print("Start training for model...")
     model.train()
     for epoch in range(n_epoch):
-        print(f"Epoch {epoch}")
         curr_epoch_loss = []
         for data, target in train_dataloader:
             #print(target)
@@ -45,18 +44,4 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
     return model
     
     
-def eval_model(model, dataloader):
-    model.eval()
-    Y_pred = []
-    Y_test = []
-    for data, target in dataloader:
-        # your code here
-        pred = model(data)
-        _, predicted = torch.max(pred, 1)
-        Y_pred.append(predicted.detach().numpy())
-        Y_test.append(target.detach().numpy())
-    Y_pred = np.concatenate(Y_pred, axis=0)
-    Y_test = np.concatenate(Y_test, axis=0)
-    print(len(Y_pred))
-    print(len(Y_test))
-    return Y_pred, Y_test
+
