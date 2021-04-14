@@ -1,6 +1,7 @@
 from torchvision import transforms, io
 from torch.utils.data import Dataset
 import pickle
+import numpy as np
 
 
 class XrayDataset(Dataset):
@@ -15,7 +16,7 @@ class XrayDataset(Dataset):
     def __getitem__(self, index):
         image_name = self.data[index]['imagePath']
         image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.RGB)
-        label = self.data[index]['label']
+        label = self.data[index]['label'].astype(np.uint8)
         if self.transform:
             image = self.transform(image)
         return image, label
