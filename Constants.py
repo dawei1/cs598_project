@@ -2,8 +2,11 @@
 
 # #Dataloader constants
 # The dataset location on Da's local machine
-DWDatasetRootDir = "./data/CheXpert-v1.0-small"
-DatasetRootDir = DWDatasetRootDir
+daDatasetRootDir = "/data/CheXpert-v1.0-small"
+WeidiDatasetRootDir = "./data/CheXpert-v1.0-small"
+jackDatasetRootDir = None
+ryanDatasetRootDir = None
+DatasetRootDir = daDatasetRootDir
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
@@ -36,4 +39,8 @@ batch_size = 256
 # Random seed, set to None for random
 seed = 1231245
 
+num_classes = 14
+
 eval_set_ratio = 0.2
+
+num_of_workers = 4

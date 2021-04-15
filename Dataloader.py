@@ -16,8 +16,9 @@ class XrayDataset(Dataset):
 
     def __getitem__(self, index):
         image_name = self.data[index]['imagePath']
-        image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.UNCHANGED).float()
-        label = torch.tensor(self.data[index]['label']).float()
+        image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.RGB).float()
+        label = torch.tensor(
+            self.data[index]['label']).float() / 255.0  # Pretrained model expect 3-channel input images
         if self.transform:
             image = self.transform(image)
         return image, label
@@ -26,13 +27,16 @@ class XrayDataset(Dataset):
 def generate_transform():
     import Constants
     transform_list = []
-    if(Constants.ImageAugment):
+    if (Constants.ImageAugment):
         transform_list = [transforms.Resize(256, transforms.InterpolationMode.BICUBIC),
                           transforms.RandomHorizontalFlip(p=0.5),
-                          transforms.RandomCrop(224)]
+                          transforms.RandomCrop(224),
+                          # Pretrained model expects these mean and std values.
+                          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
     else:
         transform_list = [transforms.Resize(256, transforms.InterpolationMode.BICUBIC),
-                          transforms.CenterCrop(224)]
+                          transforms.CenterCrop(224),
+                          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
     return transforms.Compose(transform_list)
 
 
