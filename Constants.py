@@ -10,7 +10,7 @@ DatasetRootDir = daDatasetRootDir
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
-sizeOfsubset = 8192
+sizeOfsubset = 1024
 
 # This is a pickled list of dictionaries.
 # Each dictionary contains keys of
