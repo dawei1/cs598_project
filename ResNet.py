@@ -4,54 +4,32 @@ Created on Mon Apr 12 23:20:21 2021
 
 @author: ouyad
 """
-import Constants
-import torchvision.models as models
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import pickle
-import Constants
-from Dataloader import *
-import torch
 
+def get_resnet_model():
+    import torchvision.models
+    import torch.nn
+    model = torchvision.models.resnet50(pretrained=True)
 
-class Identity(nn.Module):
-    def __init__(self):
-        super(Identity, self).__init__()
+    '''
+    for param in model.named_parameters():
+        print(param[0])
+        if param[0] == 'conv1.weight':
+            print('Keep the first conv2d layer trainable')
+            continue
+        if param[0] == 'fc.weight':
+            print('Keep the last fc layer trainable')
+            continue
+        if param[0] == 'fc.bias':
+            print('Keep the last fc layer trainable')
+            continue
+        # Freeze the pretrained model layers
+        #param[1].requires_grad = False
+    '''
+    model_list = list(model.children())[:-2]
+    model = torch.nn.Sequential(*model_list)
+    return model
 
-    def forward(self, x):
-        return x
-
-
-model = models.resnet18(pretrained=True)
-model.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), bias=False)
-num_features = model.fc.in_features
-model.fc = nn.Linear(num_features, Constants.num_classes)
-for param in model.named_parameters():
-    print(param[0])
-    if param[0] == 'conv1.weight':
-        print('Keep the first conv2d layer trainable')
-        continue
-    if param[0] == 'fc.weight':
-        print('Keep the last fc layer trainable')
-        continue
-    if param[0] == 'fc.bias':
-        print('Keep the last fc layer trainable')
-        continue
-    # Freeze the pretrained model layers
-    param[1].requires_grad = False
-
-# Need to make this layer to return the input.
-#model.fc = Identity()
-# Need to make this layer to return the input.
-#model.avgpool = Identity()
-print(model)
-criterion = nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-n_epochs = 1
-
-
+'''
 def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=optimizer, criterion=criterion):
     print("Start training for model...")
     model.train()
@@ -86,6 +64,6 @@ def eval_model(model, dataloader):
     print(len(Y_pred))
     print(len(Y_test))
     return Y_pred, Y_test
-
+'''
 
 

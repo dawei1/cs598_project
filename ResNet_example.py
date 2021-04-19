@@ -30,8 +30,8 @@ random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
 
-model = train_model(train_loader, n_epoch=10)
-
-y_pred, y_true = eval_model(model, val_loader)
-acc = accuracy_score(y_true, y_pred)
-print(("Validation Accuracy: " + str(acc)))
+model = get_resnet_model()
+for x, y in train_loader:
+    out = model(x)
+    print(out.shape)
+    break
