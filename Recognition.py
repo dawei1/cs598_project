@@ -9,13 +9,11 @@ class Recognition(torch.nn.Module):
         C_STAR = 512 #Paper says set C* to 512 
         NUM_CLASSES = 14 #14 different diseases
         super(Recognition, self).__init__()
-        self.conv1 = torch.nn.Conv2d(input_size = c_prime, output_size = C_STAR,
-                                     kernel_size=(3,3), stride = 1)
+        self.conv1 = torch.nn.Conv2d(c_prime, C_STAR, kernel_size=(3,3), stride = 1, padding=1)
 
-        self.batch_norm = torch.nn.BatchNorm2d(num_features=NUM_CLASSES)
+        self.batch_norm = torch.nn.BatchNorm2d(num_features=C_STAR)
         #cite paper with torch.nn batch norm         
-        self.conv2 = torch.nn.Conv2d(input_size = C_STAR, output_size = NUM_CLASSES, 
-                                     kernel_size=(1,1), stride = 1)
+        self.conv2 = torch.nn.Conv2d(C_STAR, NUM_CLASSES, kernel_size=(1,1), stride = 1)
 
         self.sig = torch.nn.Sigmoid()
 
