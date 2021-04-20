@@ -45,15 +45,10 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
             def closure():
                 optimizer.zero_grad()
                 output = model(data)
-                print(output.shape)
-                print(target.shape)
                 output = 1 - output
                 output = torch.prod(output, 3)
                 output = torch.prod(output, 2)
-                print(output.shape)
                 prediction = 1 - output
-                print(prediction[0, :])
-                print(target[0, :])
                 loss = criterion(prediction, target)
                 loss.backward()
                 curr_epoch_loss.append(loss.cpu().data.numpy())
