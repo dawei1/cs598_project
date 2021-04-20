@@ -34,6 +34,13 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.1)
 n_epochs = 10
 
 
+def custom_loss(output, target):
+    positive_prob_loss = torch.sum(target * torch.log(output))
+    negative_prob_loss = torch.sum((1 - target) * torch.log(1 - output))
+    total_loss = -positive_prob_loss - negative_prob_loss
+    return total_loss
+
+
 def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=optimizer, criterion=criterion):
     model.train()
     for epoch in range(n_epoch):
@@ -46,10 +53,11 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
                 optimizer.zero_grad()
                 output = model(data)
                 output = 1 - output
+                output = (output * 0.02) + 0.98
                 output = torch.prod(output, 3)
                 output = torch.prod(output, 2)
                 prediction = 1 - output
-                loss = criterion(prediction, target)
+                loss = custom_loss(prediction, target)
                 loss.backward()
                 curr_epoch_loss.append(loss.cpu().data.numpy())
                 return loss
