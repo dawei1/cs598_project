@@ -64,3 +64,4 @@ def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=opt
             optimizer.step(closure)
         print(f"Epoch {epoch}: curr_epoch_loss={np.mean(curr_epoch_loss)}")
     return model
+
