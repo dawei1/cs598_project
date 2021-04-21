@@ -12,7 +12,6 @@ RANDOM_STATE = 545510477
 #output: accuracy, auc
 def auc_eval(model, X, Y, k=5):
     
-    acc_list = []
     auc_list = []
     
     kf = KFold(n_splits=k, random_state=RANDOM_STATE, shuffle=True)
@@ -22,14 +21,10 @@ def auc_eval(model, X, Y, k=5):
         X_train, X_test = X[train_index], X[test_index] 
         Y_train, Y_test = Y[train_index], Y[test_index] 
         Y_Pred = model(X_train, Y_train, X_test)
-        
-        acc = accuracy_score(Y_test, Y_Pred)
-        acc_list.append(acc)
-        
+             
         auc = roc_auc_score(Y_test, Y_Pred)
         auc_list.append(auc)
         
-    acc_mean = mean(acc_list)
     auc_mean = mean(auc_list)
         
-    return acc_mean, auc_mean
+    return auc_mean
