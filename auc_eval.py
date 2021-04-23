@@ -37,9 +37,8 @@ def auc_eval(model, dataloader, k=5):
         
     acc_mean = mean(acc_list)
     auc_mean = mean(auc_list)        
-    auc = roc_auc_score(y_true, y_pred)
     
-    return auc
+    return auc_mean, acc_mean
 
 
 #input: X = training data and Y = corresponding labels, model = trained model
