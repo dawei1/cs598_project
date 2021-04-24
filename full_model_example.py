@@ -40,8 +40,8 @@ kf = KFold(n_splits=5, random_state=RANDOM_STATE, shuffle=True)
 for train_index, test_index in kf.split(sub_train_dataset):
     train_image, test_image = X[train_index], X[test_index]
     train_label, test_label = Y[train_index], Y[test_index]
-    tensor_x = torch.Tensor(train_image).cpu()
-    tensor_y = torch.Tensor(train_label).cpu()
+    tensor_x = torch.Tensor(train_image)
+    tensor_y = torch.Tensor(train_label)
     train_dataset = TensorDataset(tensor_x, tensor_y)
     train_dataloder = DataLoader(train_dataset)
     model = train_model(train_dataloder, n_epoch=10)
