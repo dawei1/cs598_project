@@ -48,10 +48,10 @@ for train_index, test_index in kf.split(sub_train_dataset):
     y_hat = model(torch.Tensor(test_image))
     y_Pred = torch.where(y_hat>=0.5, torch.tensor([1]), torch.tensor([0]))
     
-    acc = accuracy_score(label_test, Y_Pred)
+    acc = accuracy_score(test_label, Y_Pred)
     acc_list.append(acc)
     
-    auc = roc_auc_score(Y_test, Y_Pred)
+    auc = roc_auc_score(test_label, Y_Pred)
     auc_list.append(auc)
 
     
