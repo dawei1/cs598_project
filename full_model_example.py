@@ -7,6 +7,9 @@ import Constants
 from Dataloader import *
 from full_model import *
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import KFold
+from torch.utils.data import TensorDataset, DataLoader
+
 
 
 full_train_dataset, sub_train_dataset, val_train_dataset = get_dataset()
@@ -22,25 +25,36 @@ seed = 24
 random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
+RANDOM_STATE = 545510477
 
 acc_list = []
 auc_list = []
-for train_index, test_index in kf.split(X):
-    X_train, X_test = X[train_index], X[test_index] 
-    Y_train, Y_test = Y[train_index], Y[test_index]
-    tensor_x = torch.Tensor(X_train)
-    tensor_y = torch.Tensor(Y_train)
+X = None
+Y = None
+
+X = np.array([i[0].numpy() for i in sub_train_dataset])
+Y = np.array([i[1].numpy() for i in sub_train_dataset])
+
+
+kf = KFold(n_splits=5, random_state=RANDOM_STATE, shuffle=True)
+for train_index, test_index in kf.split(sub_train_dataset):
+    train_image, test_image = X[train_index], X[test_index]
+    train_label, test_label = Y[train_index], Y[test_index]
+    tensor_x = torch.Tensor(train_image).cpu()
+    tensor_y = torch.Tensor(train_label).cpu()
     train_dataset = TensorDataset(tensor_x, tensor_y)
     train_dataloder = DataLoader(train_dataset)
     model = train_model(train_dataloder, n_epoch=10)
-    y_hat = model(X_test)
+    y_hat = model(torch.Tensor(test_image))
     y_Pred = torch.where(y_hat>=0.5, torch.tensor([1]), torch.tensor([0]))
     
-    acc = accuracy_score(Y_test, Y_Pred)
+    acc = accuracy_score(label_test, Y_Pred)
     acc_list.append(acc)
     
     auc = roc_auc_score(Y_test, Y_Pred)
     auc_list.append(auc)
+
+    
 acc_mean = mean(acc_list)
 auc_mean = mean(auc_list)        
-print(acc_mean,auc_mean)
+print(acc_mean, auc_mean)
