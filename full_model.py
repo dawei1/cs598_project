@@ -26,11 +26,11 @@ class PatchingModel(torch.nn.Module):
 resnet_out_height_width = 7
 c_prime = 2048
 P = 10
-model = PatchingModel(resnet_out_height_width, P, c_prime)
+patching_model = PatchingModel(resnet_out_height_width, P, c_prime)
 
 
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.1)
+optimizer = torch.optim.Adam(patching_model.parameters(), lr=0.001, weight_decay=0.1)
 n_epochs = 10
 
 
@@ -40,15 +40,13 @@ def custom_loss(output, target):
     total_loss = -positive_prob_loss - negative_prob_loss
     return total_loss
 
-
-def train_model(train_dataloader, model = model, n_epoch=n_epochs, optimizer=optimizer, criterion=criterion):
+def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, optimizer=optimizer, criterion=criterion):
     model.train()
     for epoch in range(n_epoch):
         print(f"Starting Epoch {epoch}")
         print(datetime.datetime.now())
         curr_epoch_loss = []
         for data, target in train_dataloader:
-            #print(target)
             def closure():
                 optimizer.zero_grad()
                 output = model(data)

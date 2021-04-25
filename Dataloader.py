@@ -16,9 +16,9 @@ class XrayDataset(Dataset):
 
     def __getitem__(self, index):
         image_name = self.data[index]['imagePath']
-        image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.RGB).float()
+        image = io.read_image(self.data[index]['imagePath'], io.image.ImageReadMode.RGB).float() / 255.0
         label = torch.tensor(
-            self.data[index]['label']).float() / 255.0  # Pretrained model expect 3-channel input images
+            self.data[index]['label']).int()  # Pretrained model expect 3-channel input images
         if self.transform:
             image = self.transform(image)
         return image, label
