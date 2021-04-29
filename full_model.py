@@ -33,6 +33,7 @@ criterion = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(patching_model.parameters(), lr=0.001, weight_decay=0.1)
 n_epochs = 10
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def custom_loss(output, target):
     positive_prob_loss = torch.sum(target * torch.log(output))
@@ -47,6 +48,7 @@ def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, opti
         print(datetime.datetime.now())
         curr_epoch_loss = []
         for data, target in train_dataloader:
+            data, target = data.to(device), target.to(device)
             def closure():
                 optimizer.zero_grad()
                 output = model(data)
