@@ -7,6 +7,8 @@ import Patching as p
 import Recognition as r
 import ResNet as rn
 
+from GPUtil import showUtilization as gpu_usage
+
 
 class PatchingModel(torch.nn.Module):
 
@@ -49,18 +51,24 @@ def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, opti
         curr_epoch_loss = []
         for data, target in train_dataloader:
             data, target = data.to(device), target.to(device)
-            def closure():
-                optimizer.zero_grad()
-                output = model(data)
-                output = 1 - output
-                output = (output * 0.02) + 0.98
-                output = torch.prod(output, 3)
-                output = torch.prod(output, 2)
-                prediction = 1 - output
-                loss = custom_loss(prediction, target)
-                loss.backward()
-                curr_epoch_loss.append(loss.cpu().data.numpy())
-                return loss
-            optimizer.step(closure)
+            optimizer.zero_grad()
+            output = model(data)
+            output = 1 - output
+            output = (output * 0.02) + 0.98
+            output = torch.prod(output, 3)
+            output = torch.prod(output, 2)
+            prediction = 1 - output
+            loss = custom_loss(prediction, target)
+            loss.backward()
+            curr_epoch_loss.append(loss.cpu().data.numpy())
+            optimizer.step()
+            
+            del loss
+            del output
+            del prediction
+            del data
+            del target
+            torch.cuda.empty_cache()
+
         print(f"Epoch {epoch}: curr_epoch_loss={np.mean(curr_epoch_loss)}")
     return model
