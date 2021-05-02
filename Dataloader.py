@@ -28,14 +28,14 @@ def generate_transform():
     import Constants
     transform_list = []
     if (Constants.ImageAugment):
-        transform_list = [transforms.Resize(256, transforms.InterpolationMode.BICUBIC),
+        transform_list = [transforms.Resize(Constants.image_resize_size, transforms.InterpolationMode.BICUBIC),
                           transforms.RandomHorizontalFlip(p=0.5),
-                          transforms.RandomCrop(224),
+                          transforms.RandomCrop(Constants.image_crop_size),
                           # Pretrained model expects these mean and std values.
                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
     else:
-        transform_list = [transforms.Resize(256, transforms.InterpolationMode.BICUBIC),
-                          transforms.CenterCrop(224),
+        transform_list = [transforms.Resize(Constants.image_resize_size, transforms.InterpolationMode.BICUBIC),
+                          transforms.CenterCrop(Constants.image_crop_size),
                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
     return transforms.Compose(transform_list)
 

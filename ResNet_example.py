@@ -4,15 +4,10 @@ Created on Tue Apr 13 01:25:29 2021
 
 @author: ouyad
 """
-import numpy as np
 import random
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import Constants
-from Dataloader import *
+from Dataloader_2 import *
 from ResNet import *
-from sklearn.metrics import accuracy_score
+
 import Constants
 
 
