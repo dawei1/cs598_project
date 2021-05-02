@@ -48,5 +48,5 @@ eval_set_ratio = 0.2
 
 num_of_workers = 4
 
-image_resize_size = 1280
-image_crop_size = 1024
+image_resize_size = 512
+image_crop_size = 448

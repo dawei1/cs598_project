@@ -6,6 +6,7 @@ import torch
 import Patching as p
 import Recognition as r
 import ResNet as rn
+import Constants
 
 from GPUtil import showUtilization as gpu_usage
 
@@ -25,7 +26,7 @@ class PatchingModel(torch.nn.Module):
         return output
 
 
-resnet_out_height_width = 7
+resnet_out_height_width = int(Constants.image_crop_size/32)
 c_prime = 2048
 P = 10
 patching_model = PatchingModel(resnet_out_height_width, P, c_prime)

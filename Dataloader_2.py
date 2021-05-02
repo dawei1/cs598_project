@@ -6,10 +6,10 @@ import numpy as np
 
 class XrayDataset(Dataset):
 
-    def __init__(self, dataset, transform=None):
+    def __init__(self, dataset, transform_list):
         import Constants
         self.data = dataset
-        self.transform = transform
+        self.transform_list = transform_list
         self.blank_image = torch.zeros(3, Constants.image_crop_size, Constants.image_crop_size)
         self.image_size = Constants.image_crop_size
 
@@ -19,15 +19,16 @@ class XrayDataset(Dataset):
     def __getitem__(self, index):
         if self.data[index]['Lateral_imagePath'] is not None:
             lateral_image = io.read_image(self.data[index]['Lateral_imagePath'],io.image.ImageReadMode.RGB).float() / 255.0
-            lateral_image = self.transform(lateral_image)
+            lateral_image = self.transform_list[0](lateral_image)
         else:
             lateral_image = self.blank_image
         if self.data[index]['Frontal_imagePath'] is not None:
             frontal_image = io.read_image(self.data[index]['Lateral_imagePath'],io.image.ImageReadMode.RGB).float() / 255.0
-            frontal_image = self.transform(frontal_image)
+            frontal_image = self.transform_list[0](frontal_image)
         else:
             frontal_image = self.blank_image
         image = torch.cat((frontal_image, lateral_image), -1)  # concat the image side by side
+        image = self.transform_list[1](image)
         label = torch.tensor(self.data[index]['label']).int()
         return image, label
 
@@ -38,14 +39,15 @@ def generate_transform():
     if Constants.ImageAugment:
         transform_list = [transforms.Resize(Constants.image_resize_size, transforms.InterpolationMode.BICUBIC),
                           transforms.RandomHorizontalFlip(p=0.5),
-                          transforms.RandomCrop(Constants.image_crop_size),
-                          # Pretrained model expects these mean and std values.
-                          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
+                          transforms.RandomCrop(Constants.image_crop_size)]
     else:
         transform_list = [transforms.Resize(Constants.image_resize_size, transforms.InterpolationMode.BICUBIC),
-                          transforms.CenterCrop(Constants.image_crop_size),
-                          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
-    return transforms.Compose(transform_list)
+                          transforms.CenterCrop(Constants.image_crop_size)]
+    # Resize the image back to a square.
+    final_transform_list = [transforms.Resize((Constants.image_crop_size, Constants.image_crop_size), transforms.InterpolationMode.BICUBIC),
+                            # Pretrained model expects these mean and std values.
+                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
+    return transforms.Compose(transform_list), transforms.Compose(final_transform_list)
 
 
 def get_dataset():
