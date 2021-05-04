@@ -10,7 +10,7 @@ DatasetRootDir = "/home/CheXpert-v1.0-small"
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
-sizeOfsubset = 16384
+sizeOfsubset = 1024
 
 # This is a pickled list of dictionaries.
 # Each dictionary contains keys of

@@ -24,12 +24,14 @@ def parse_dataset_csv(csv_path):
             path_list = row[0].split('/')
             previous_record = current_record
             current_record = path_list[2]+path_list[2] # patient#+study#
+            folder_name = row[0].split('/')[0]
             if current_record == previous_record:  # The same patient in the same study,
                 if row[3] == 'Lateral':
-                    image_dic['Lateral_imagePath'] = Constants.DatasetRootDir+row[0].replace('CheXpert-v1.0-small', '')
+                    image_dic['Lateral_imagePath'] = Constants.DatasetRootDir+row[0].replace(folder_name, '')
                     num_of_lateral = num_of_lateral + 1
+                    print(image_dic['Lateral_imagePath'])
                 else:
-                    image_dic['Frontal_imagePath'] = Constants.DatasetRootDir + row[0].replace('CheXpert-v1.0-small', '')
+                    image_dic['Frontal_imagePath'] = Constants.DatasetRootDir + row[0].replace(folder_name, '')
                     image_dic['type'] = row[4]  # PA(preferred) vs AP
             else:
                 if key_flag in image_dic:
