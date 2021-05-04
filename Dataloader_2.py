@@ -23,7 +23,7 @@ class XrayDataset(Dataset):
         else:
             lateral_image = self.blank_image
         if self.data[index]['Frontal_imagePath'] is not None:
-            frontal_image = io.read_image(self.data[index]['Lateral_imagePath'],io.image.ImageReadMode.RGB).float() / 255.0
+            frontal_image = io.read_image(self.data[index]['Frontal_imagePath'],io.image.ImageReadMode.RGB).float() / 255.0
             frontal_image = self.transform_list[0](frontal_image)
         else:
             frontal_image = self.blank_image

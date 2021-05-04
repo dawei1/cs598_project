@@ -37,7 +37,7 @@ ParsedValidsetPath_wide = "./Validation_Dataset_wide.pickle"
 ImageAugment = True
 
 # batch size
-batch_size = 64
+batch_size = 32
 
 # Random seed, set to None for random
 seed = 1231245
