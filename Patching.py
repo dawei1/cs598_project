@@ -10,7 +10,7 @@ class Patching(torch.nn.Module):
         elif P > height_width:
             self.patching = torch.nn.Upsample(size=(P, P))
         else:  # P < height_width
-            kernel_size = height_width - P +_1
+            kernel_size = height_width - P + 1
             self.patching = torch.nn.MaxPool2d(kernel_size, stride=1)
 
     def forward(self, x):

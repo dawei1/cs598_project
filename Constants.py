@@ -6,11 +6,11 @@ daDatasetRootDir = "/data/CheXpert-v1.0-small"
 WeidiDatasetRootDir = "./data/CheXpert-v1.0-small"
 jackDatasetRootDir = None
 ryanDatasetRootDir = None
-DatasetRootDir = daDatasetRootDir
+DatasetRootDir = "/home/CheXpert-v1.0-small"
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
-sizeOfsubset = 1024
+sizeOfsubset = 16384
 
 # This is a pickled list of dictionaries.
 # Each dictionary contains keys of
@@ -37,7 +37,7 @@ ParsedValidsetPath_wide = "./Validation_Dataset_wide.pickle"
 ImageAugment = True
 
 # batch size
-batch_size = 2
+batch_size = 64
 
 # Random seed, set to None for random
 seed = 1231245
@@ -46,7 +46,7 @@ num_classes = 14
 
 eval_set_ratio = 0.2
 
-num_of_workers = 4
-
 image_resize_size = 512
 image_crop_size = 448
+
+num_of_workers = 8

@@ -28,7 +28,7 @@ class PatchingModel(torch.nn.Module):
 
 resnet_out_height_width = int(Constants.image_crop_size/32)
 c_prime = 2048
-P = 10
+P = 6
 patching_model = PatchingModel(resnet_out_height_width, P, c_prime)
 
 
