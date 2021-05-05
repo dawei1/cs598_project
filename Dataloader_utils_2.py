@@ -15,6 +15,7 @@ def parse_dataset_csv(csv_path):
         previous_record = None
         current_record = None
         image_dic = {}
+        no_finding_class = 0
         for row in dataset_info:
             # The first row is the col names.
             if not col_name_found:
@@ -29,14 +30,12 @@ def parse_dataset_csv(csv_path):
                 if row[3] == 'Lateral':
                     image_dic['Lateral_imagePath'] = Constants.DatasetRootDir+row[0].replace(folder_name, '')
                     num_of_lateral = num_of_lateral + 1
-                    print(image_dic['Lateral_imagePath'])
                 else:
                     image_dic['Frontal_imagePath'] = Constants.DatasetRootDir + row[0].replace(folder_name, '')
                     image_dic['type'] = row[4]  # PA(preferred) vs AP
             else:
                 if key_flag in image_dic:
                     dataset_list.append(image_dic) # Write the old record before init a new one
-                    num_of_case = num_of_case + 1
                 image_dic = {}
                 image_dic['Lateral_imagePath'] = None
                 image_dic['Frontal_imagePath'] = None
@@ -55,9 +54,18 @@ def parse_dataset_csv(csv_path):
                 # replace -1 entry with 0
                 labels[labels == '-1.0'] = '0.0'
                 labels = labels.astype(np.float)
-                image_dic['label'] = np.squeeze(labels)
+                if labels[0] > 0.5:
+                    labels[1:len(labels)] = 0.0
+                    no_finding_class = no_finding_class + 1
+                    if no_finding_class <= Constants.num_of_nofinding_cases:
+                        image_dic['label'] = np.squeeze(labels)
+                        num_of_case = num_of_case + 1
+                else:
+                    image_dic['label'] = np.squeeze(labels)
+                    num_of_case = num_of_case + 1
         print("Num of cases with lateral image: "+str(num_of_lateral))
         print("Total num of cases: " + str(num_of_case))
+        print("Total num of no finding cases: " + str(no_finding_class))
     return col_name_list, dataset_list
 
 

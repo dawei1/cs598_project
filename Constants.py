@@ -6,7 +6,7 @@ daDatasetRootDir = "/data/CheXpert-v1.0-small"
 WeidiDatasetRootDir = "./data/CheXpert-v1.0-small"
 jackDatasetRootDir = None
 ryanDatasetRootDir = None
-DatasetRootDir = "/home/CheXpert-v1.0-small"
+DatasetRootDir = "/data/CheXpert-v1.0-small"
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
@@ -46,7 +46,9 @@ num_classes = 14
 
 eval_set_ratio = 0.2
 
-image_resize_size = 512
-image_crop_size = 448
+image_resize_size = 1280
+image_crop_size = 1024
 
-num_of_workers = 8
+num_of_workers = 16
+
+num_of_nofinding_cases = 2000
