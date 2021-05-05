@@ -88,12 +88,23 @@ def select_subset(data_set, subset_size, seed=None):
     return [data_set[idx] for idx in chosen_idx]
 
 
+def select_concat(data_set):
+    chosen_idx = set()
+    for idx in range(len(data_set)):
+        # Let's focus on the frontal PA scan for now.
+        if data_set[idx]['Lateral_imagePath'] is not None and data_set[idx]['type'] == 'PA':
+            chosen_idx.add(idx)
+    chosen_idx = list(chosen_idx)
+    return [data_set[idx] for idx in chosen_idx]
+
+
 def save_dataset_info():
     import Constants
     import pickle
     _, full_train_dataset_info = parse_dataset_csv(Constants.TrainCSVpath)
     sub_train_dataset_info = select_subset(full_train_dataset_info, Constants.sizeOfsubset, Constants.seed)
     validation_dataset_info = parse_dataset_csv(Constants.ValidCSVpath)
+    full_train_dataset_info = select_concat(full_train_dataset_info)
     with open(Constants.ParsedDatasetPath_wide, 'wb') as file_handler:
         pickle.dump(full_train_dataset_info, file_handler)
     with open(Constants.ParsedSubsetPath_wide, 'wb') as file_handler:
