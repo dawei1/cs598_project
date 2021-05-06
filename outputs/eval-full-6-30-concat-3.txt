@@ -1,0 +1,100 @@
+# This file contains outputs for an evaluation using all images from
+# the small (low resolution) CheXpert dataset, with P=6 and 30 epochs. These
+# results are for the concatenated frontal and lateral images.
+
+Starting Epoch 0
+2021-05-04 16:57:54.522253
+Epoch 0: curr_epoch_loss=64.20153045654297
+Starting Epoch 1
+2021-05-04 17:03:11.635158
+Epoch 1: curr_epoch_loss=62.70645523071289
+Starting Epoch 2
+2021-05-04 17:08:28.504815
+Epoch 2: curr_epoch_loss=62.59482955932617
+Starting Epoch 3
+2021-05-04 17:13:44.864910
+Epoch 3: curr_epoch_loss=62.46575927734375
+Starting Epoch 4
+2021-05-04 17:19:01.360682
+Epoch 4: curr_epoch_loss=62.4820671081543
+Starting Epoch 5
+2021-05-04 17:24:18.087311
+Epoch 5: curr_epoch_loss=62.45258331298828
+Starting Epoch 6
+2021-05-04 17:29:34.912368
+Epoch 6: curr_epoch_loss=62.38720703125
+Starting Epoch 7
+2021-05-04 17:34:51.723918
+Epoch 7: curr_epoch_loss=62.360233306884766
+Starting Epoch 8
+2021-05-04 17:40:08.608830
+Epoch 8: curr_epoch_loss=62.31835174560547
+Starting Epoch 9
+2021-05-04 17:45:25.460993
+Epoch 9: curr_epoch_loss=62.15542221069336
+Starting Epoch 10
+2021-05-04 17:50:42.046473
+Epoch 10: curr_epoch_loss=61.998653411865234
+Starting Epoch 11
+2021-05-04 17:55:58.714284
+Epoch 11: curr_epoch_loss=62.06929016113281
+Starting Epoch 12
+2021-05-04 18:01:15.246329
+Epoch 12: curr_epoch_loss=61.84099197387695
+Starting Epoch 13
+2021-05-04 18:06:31.858321
+Epoch 13: curr_epoch_loss=61.54054260253906
+Starting Epoch 14
+2021-05-04 18:11:48.658692
+Epoch 14: curr_epoch_loss=61.333805084228516
+Starting Epoch 15
+2021-05-04 18:17:04.974321
+Epoch 15: curr_epoch_loss=60.96014404296875
+Starting Epoch 16
+2021-05-04 18:22:21.686533
+Epoch 16: curr_epoch_loss=60.694644927978516
+Starting Epoch 17
+2021-05-04 18:27:38.373261
+Epoch 17: curr_epoch_loss=60.250511169433594
+Starting Epoch 18
+2021-05-04 18:32:54.978314
+Epoch 18: curr_epoch_loss=60.39874267578125
+Starting Epoch 19
+2021-05-04 18:38:11.544887
+Epoch 19: curr_epoch_loss=60.04677963256836
+Starting Epoch 20
+2021-05-04 18:43:27.906780
+Epoch 20: curr_epoch_loss=60.052059173583984
+Starting Epoch 21
+2021-05-04 18:48:44.451065
+Epoch 21: curr_epoch_loss=60.02385330200195
+Starting Epoch 22
+2021-05-04 18:54:00.609217
+Epoch 22: curr_epoch_loss=60.075130462646484
+Starting Epoch 23
+2021-05-04 18:59:16.672945
+Epoch 23: curr_epoch_loss=60.20248031616211
+Starting Epoch 24
+2021-05-04 19:04:33.131198
+Epoch 24: curr_epoch_loss=59.9082145690918
+Starting Epoch 25
+2021-05-04 19:09:49.171645
+Epoch 25: curr_epoch_loss=59.92436599731445
+Starting Epoch 26
+2021-05-04 19:15:05.410163
+Epoch 26: curr_epoch_loss=59.95767593383789
+Starting Epoch 27
+2021-05-04 19:20:21.888007
+Epoch 27: curr_epoch_loss=59.74754333496094
+Starting Epoch 28
+2021-05-04 19:25:38.603886
+Epoch 28: curr_epoch_loss=59.67234802246094
+Starting Epoch 29
+2021-05-04 19:30:55.201097
+Epoch 29: curr_epoch_loss=59.70526123046875
+[0.7356703  0.95215538 0.92325912 0.73235433 0.93699668 0.95736618
+ 0.95262909 0.94599716 0.91567977 0.97963051 0.85836097 0.97299858
+ 0.95120796 0.82804358]
+[0.70650747 0.49839417 0.67069532 0.61987659 0.59576583 0.72244763
+ 0.68936847 0.5840032  0.65270262 0.57622239 0.77059108 0.51877808
+ 0.49817236 0.54625357]

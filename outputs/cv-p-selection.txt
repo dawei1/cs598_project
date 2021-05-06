@@ -1,3 +1,8 @@
+# This file contains outputs for a 5 fold cross-validation for testing out
+# different values of p for patching size. The final results are shown at the
+# bottom for each different value of p. The first set of results is accuracy
+# and the second set of results is AUC.
+
 starting next fold
 starting next p value
 Starting Epoch 0

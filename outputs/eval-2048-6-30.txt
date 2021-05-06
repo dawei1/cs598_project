@@ -1,3 +1,6 @@
+# This file contains outputs for an evaluation using a 2048 image dataset from
+# the small (low resolution) CheXpert dataset, with P=6 and 30 epochs.
+
 Starting Epoch 0
 2021-05-02 23:17:50.946976
 Epoch 0: curr_epoch_loss=304.2244873046875
