@@ -1,3 +1,7 @@
+'''
+This module defines the patching portion of the model architecture.
+'''
+
 import torch
 
 

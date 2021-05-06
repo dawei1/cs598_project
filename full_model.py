@@ -1,3 +1,9 @@
+'''
+This module defines the entire model architecture and combines the different
+pieces that are defined in other modules. It also defines a method for model
+training and defines some default configuration for the model such as the
+patching size P.
+'''
 import datetime
 
 import numpy as np
@@ -7,8 +13,6 @@ import Patching as p
 import Recognition as r
 import ResNet as rn
 import Constants
-
-from GPUtil import showUtilization as gpu_usage
 
 
 class PatchingModel(torch.nn.Module):
@@ -25,14 +29,11 @@ class PatchingModel(torch.nn.Module):
         output = self.recognition(output)
         return output
 
-
+# Define default model configuration
 resnet_out_height_width = int(Constants.image_crop_size/32)
 c_prime = 2048
 P = 6
 patching_model = PatchingModel(resnet_out_height_width, P, c_prime)
-
-
-criterion = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(patching_model.parameters(), lr=0.001, weight_decay=0.1)
 n_epochs = 10
 
@@ -44,7 +45,7 @@ def custom_loss(output, target):
     total_loss = -positive_prob_loss - negative_prob_loss
     return total_loss
 
-def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, optimizer=optimizer, criterion=criterion):
+def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, optimizer=optimizer):
     model.train()
     for epoch in range(n_epoch):
         print(f"Starting Epoch {epoch}")
@@ -63,7 +64,7 @@ def train_model(train_dataloader, model = patching_model, n_epoch=n_epochs, opti
             loss.backward()
             curr_epoch_loss.append(loss.cpu().data.numpy())
             optimizer.step()
-            
+
             del loss
             del output
             del prediction

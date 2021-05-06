@@ -1,24 +1,39 @@
+'''
+This module performs an evaluation of the model with cross-validation, including
+GPU integration, with the intent of determining the best hyperparameters.
+The logic outputs metrics for accuracy and AUC. The import for the dataloader
+can be adjusted to change which images are used (frontal vs frontal-lateral
+concatenated). The code can also be adjusted below to use either the full dataset
+or a portion of the dataset.
+'''
 import numpy as np
 import random
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import Constants
-from Dataloader import *
+# CHANGE HERE for using different style of images
+from frontal.Dataloader import *
+#from frontal_lateral_concat.Dataloader import *
 from full_model import *
 from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.model_selection import KFold
 from torch.utils.data import TensorDataset, DataLoader
-from GPUtil import showUtilization as gpu_usage
 
 
 
 full_train_dataset, sub_train_dataset, val_train_dataset = get_dataset()
 
+# CHANGE HERE for using a subset of the data
 sub_train_dataset_len = sub_train_dataset.__len__()
 eval_set_size = int(sub_train_dataset_len * Constants.eval_set_ratio)
 train_set_size = sub_train_dataset_len - eval_set_size
 train_dataset, eval_dataset = torch.utils.data.random_split(sub_train_dataset, [train_set_size, eval_set_size])
+#full_train_dataset_len = full_train_dataset.__len__()
+#eval_set_size = int(full_train_dataset_len * Constants.eval_set_ratio)
+#train_set_size = full_train_dataset_len - eval_set_size
+#train_dataset, eval_dataset = torch.utils.data.random_split(full_train_dataset, [train_set_size, eval_set_size])
+
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=Constants.batch_size, shuffle=True, num_workers=Constants.num_of_workers)
 val_loader = torch.utils.data.DataLoader(eval_dataset, batch_size=Constants.batch_size, shuffle=True, num_workers=Constants.num_of_workers)
 
@@ -76,17 +91,17 @@ for train_index, test_index in kf.split(sub_train_dataset):
             y_hats.extend(y_hat.detach().numpy())
             y_Preds.extend(y_Pred.detach().numpy())
             targets.extend(target.detach().numpy())
-        
+
             del data
             torch.cuda.empty_cache()
-            
+
         y_hats = np.array(y_hats)
         y_Preds = np.array(y_Preds)
         targets = np.array(targets)
         acc = np.array([accuracy_score(targets[:, idx], y_Preds[:, idx]) for idx in range(targets.shape[1])])
         print(acc)
         acc_list[p].append(acc)
-        
+
         auc = np.array([roc_auc_score(targets[:, idx], y_hats[:, idx]) for idx in range(targets.shape[1])])
         print(auc)
         auc_list[p].append(auc)

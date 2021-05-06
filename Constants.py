@@ -1,4 +1,6 @@
-# Let's put all the global constants here.
+'''
+This module defines all the constants that will be used throughout the project
+'''
 
 # #Dataloader constants
 # The dataset location on Da's local machine
@@ -6,7 +8,9 @@ daDatasetRootDir = "/data/CheXpert-v1.0-small"
 WeidiDatasetRootDir = "./data/CheXpert-v1.0-small"
 jackDatasetRootDir = None
 ryanDatasetRootDir = None
-DatasetRootDir = "/data/CheXpert-v1.0-small"
+DatasetRootDir = "/home/CheXpert-v1.0-small"
+#DatasetRootDir = "/mnt/disks/fullresimages/CheXpert-v1.0"
+dir_prefix = "CheXpert-v1.0-small"
 TrainCSVpath = DatasetRootDir+"/train.csv"
 ValidCSVpath = DatasetRootDir+"/valid.csv"
 # The size of the subset used for local development
@@ -37,7 +41,7 @@ ParsedValidsetPath_wide = "./Validation_Dataset_wide.pickle"
 ImageAugment = True
 
 # batch size
-batch_size = 16
+batch_size = 4
 
 # Random seed, set to None for random
 seed = 1231245

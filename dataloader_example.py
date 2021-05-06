@@ -1,7 +1,9 @@
-# Please add a XXDatasetRootDir that point to the dataset path on your machine and assign it to DatasetRootDir if you
-# want to generate other sub datasets.
+'''
+This module is an example of using the dataloader, and makes it easy to check
+that the output of the dataloader is as expected.
+'''
 import Constants
-from Dataloader_2 import *
+from frontal_lateral_concat.Dataloader import *
 import torch
 import torchvision
 import matplotlib.pyplot as plt

@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 13 01:25:29 2021
-
-@author: ouyad
-"""
+'''
+This module is used for playing with the ResNet portion of the model, for example
+to ensure tha the output sizes are as expected.
+'''
 import random
 from Dataloader_2 import *
 from ResNet import *
-
 import Constants
 
 
